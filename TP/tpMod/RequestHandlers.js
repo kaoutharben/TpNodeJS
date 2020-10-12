@@ -38,7 +38,7 @@ function login(response) {
   response.end();
 }
 function logout(response) {
-  console.log("Request handler 'start' was called.");
+  console.log("Request handler 'logout' was called.");
   response.writeHead(200, { "Content-Type": "text/plain" });
   response.write("Hello logout");
   response.end();
