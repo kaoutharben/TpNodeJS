@@ -45,4 +45,14 @@ max-width: unset;
 .headerSearch{
     display: flex;
    
-} 
+}
+.searchPage_result {
+    display: flex;
+    justify-content: center;
+}
+
+.searchPage_result > p {
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-top: 10px;
+    }
