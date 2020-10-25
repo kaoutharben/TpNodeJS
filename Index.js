@@ -90,7 +90,7 @@ var express = require("express"),
 
 var requestHandlers = require("./RequestHandlers");
 
-app.get('/upload', (req, res) => {
+app.get('/upload', isLoggedIn, (req, res) => {
     requestHandlers.upload(res)
 });
 app.get('/find', (req, res) => {
@@ -99,11 +99,6 @@ app.get('/find', (req, res) => {
 app.get('/show', (req, res) => {
     requestHandlers.show(res)
 });
-
-app.get('/logout', (req, res) => {
-    requestHandlers.logout(res)
-});
-
 
 app.listen(3333, function(){
     console.log('started app')
