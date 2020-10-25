@@ -1,0 +1,54 @@
+.upload {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+.upload__header {
+  width: 130px;
+  object-fit: contain;
+}
+
+.upload__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.upload__body > img {
+  display: block;
+  margin-top: -170px;
+  margin-left: auto;
+  margin-right: auto;
+  object-fit: contain;
+  width: 500px;
+}
+.subtitle{
+ color:#a8df9d ;
+ font-size: 20px;
+ 
+}
+.upload__input {
+  display: flex;
+  align-items: center;
+  border: 1px solid lightgray;
+  height: 30px;
+  padding: 10px 20px;
+  border-radius: 999px;
+  width: fit-content;
+  margin: 0 auto;
+  margin-top: -135px;
+  max-width: 560px;
+  color: #5a5a5a;
+}
+
+.upload__input > input {
+  flex: 1;
+  padding: 10px 20px;
+  font-size: medium;
+  border: none;
+  cursor: pointer;
+}
+.upload__input > input:focus {
+  outline-width: 0;
+}
+
