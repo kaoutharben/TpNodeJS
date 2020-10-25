@@ -51,4 +51,30 @@
 .upload__input > input:focus {
   outline-width: 0;
 }
+.upload_button {
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 30px;
+    padding: 12px 36px;
+    font-family: "Roboto";
+    background: white;
+    text-decoration: none;
+    text-transform: uppercase;
+    border-radius: 40px;
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, #6eae62, #b8d7b2);
+    border: none;
+    cursor: pointer;
+}
+.upload_button:focus {
+        border-color: transparent;
+        outline: none;
+    }
 
+.upload_button:focus,
+.upload_button:hover,
+.upload_button:active {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+}

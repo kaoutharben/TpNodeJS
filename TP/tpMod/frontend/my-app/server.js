@@ -1,4 +1,7 @@
-const express = require('express');
+const express = require("express")
+const fileUpload = require("express-fileupload")
+const cors = require("cors")
+const morgan = require("morgan")
 const bodyParser = require('body-parser');
 const path = require('path');
 const crypto = require('crypto');
@@ -8,15 +11,16 @@ const GridFsStorage = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
 const methodOverride = require('method-override');
 
-const app = express();
+
+const app = express()
 
 // Middleware
 app.use(bodyParser.json());
 app.use(methodOverride('_method'));
-app.set('view engine', 'ejs');
+
 
 // Mongo URI
-const mongoURI = 'mongodb+srv://cluster0.hloif.mongodb.net/TP1';
+const mongoURI = 'mongodb+srv://admin:123@cluster0.hloif.mongodb.net/TP1?retryWrites=true&w=majority';
 
 // Create mongo connection
 const conn = mongoose.createConnection(mongoURI);
@@ -124,7 +128,7 @@ app.get('/image/:filename', (req, res) => {
         }
 
         // Check if image
-        if (file.contentType === 'image/jpeg' || file.contentType === 'img/png') {
+        if (file.contentType === 'image/jpeg' || file.contentType === 'image/png') {
             // Read output to browser
             const readstream = gfs.createReadStream(file.filename);
             readstream.pipe(res);
@@ -135,19 +139,37 @@ app.get('/image/:filename', (req, res) => {
         }
     });
 });
+app.use(fileUpload({
+    createParentPath: true
+}))
 
-// @route DELETE /files/:id
-// @desc  Delete file
-app.delete('/files/:id', (req, res) => {
-    gfs.remove({ _id: req.params.id, root: 'uploads' }, (err, gridStore) => {
-        if (err) {
-            return res.status(404).json({ err: err });
+app.use(cors())
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+app.use(morgan("dev"))
+
+app.post("/picture", async (req, res) => {
+    try {
+        if (!req.files) {
+            res.send({
+                status: false,
+                message: "No files"
+            })
+        } else {
+            const { picture } = req.files
+
+            picture.mv("./uploads/" + picture.name)
+
+            res.send({
+                status: true,
+                message: "File is uploaded"
+            })
         }
+    } catch (e) {
+        res.status(500).send(e)
+    }
+})
 
-        res.redirect('/');
-    });
-});
+const port = 4000
 
-const port = 5000;
-
-app.listen(port, () => console.log(`Server started on port ${port}`));
+app.listen(port, () => console.log(`Server is running on port ${port}`))

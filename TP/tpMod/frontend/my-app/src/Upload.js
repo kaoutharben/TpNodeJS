@@ -2,23 +2,24 @@ import React,{useState} from 'react';
 import { Link } from "react-router-dom";
 import './Upload.css';
 import PublishIcon from '@material-ui/icons/Publish';
-import axios, { post } from 'axios';
+import { useForm } from 'react-hook-form'
 
 
 function Upload() {
-    /*
-    const onchange=(e)=>
-    {   
-        let files = e.target.files;
-        let reader = new FileReader()
-        reader.readAsDataURL(files[0]);
-        reader.onload = (e) => {
-            const url = "http"
-            const formData = { file: e.target.result }
-            return post(url, formData).
-        }
-    } */
+
+    const { register, handleSubmit } = useForm()
+    const onSubmit = async (data) => {
+        const formData = new FormData()
+        formData.append("picture", data.picture[0])
+
+        const res = await fetch("http://localhost:4000/picture", {
+            method: "POST",
+            body: formData
+        }).then(res => res.json())
+        alert(JSON.stringify(res))
+    }
     return (
+
         <div className='uploadd'>
             <div className="upload__header">
                 <Link to='/'><img className='logo__header'  src={require('./logo.png')} alt=""/></Link> 
@@ -26,12 +27,15 @@ function Upload() {
             <div className="upload__body">
                 <img src={require('./LIBGO.png')} alt=""/>
 
-                <div  className='upload__input'>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <div className='upload__input'>
                     <PublishIcon/>
                     <label >Upload a Picture : </label>
 
-                    < input type="file" accept="image/*" name="file" id="input"/>
-            </div>
+                        < input ref={register} type="file" accept="image/*" name="picture" id="input" />
+                    </div>
+                    <button className='upload_button'>upload</button>
+                </form>
             </div>
         </div>
     )
